@@ -1,16 +1,4 @@
-/* 
-    2. 
-       Write a function to create the my-photos Component
-       
-       Create a Column Flexbox container around my-photos
-       
-       Create a new img and place it, centered, above my-photos
-        -This should be hidden initially
-        -Also give it the my-photo class
-    
-       Create a "click" event for each photo in my-photos
-        -When clicked, load the clicked photo into the new img tag
-*/
+// creating and adding an h1 nodeElement.
 function createHeader() {
   const h1 = document.createElement("h1");
   h1.innerText = "Podto.app";
@@ -18,7 +6,7 @@ function createHeader() {
   const photoDisplay = document.getElementById("photoDisplay");
   photoDisplay.appendChild(h1.cloneNode(true));
 }
-
+// creating the app, the actual photo display area, and the grid of 9 photos.
 function createApp() {
   const appContainer = document.createElement("div");
   const photoDisplay = document.createElement("div");
@@ -33,12 +21,14 @@ function createApp() {
   photoDisplay.id = "photoDisplay";
   photoGrid.classList.add("grid", "container");
   photoGrid.id = "photoGrid";
+
   // app >> display + grid
   appContainer.appendChild(photoDisplay);
   appContainer.appendChild(photoGrid);
   document.body.appendChild(appContainer);
 }
 
+// receives an image src, alt text, and displays the image.
 function displayImage(src, alt) {
   const photoDisplay = document.getElementById("photoDisplay");
   photoDisplay.innerHTML = "";
@@ -48,6 +38,10 @@ function displayImage(src, alt) {
   photoDisplay.appendChild(img);
 }
 
+// get data from API or in this case photos.json
+// the api randomly returns no pictures
+// for now, I have selected to show case specific pictures.
+// A single update to this function **URL** reconnects to the picSUM API.
 async function fetchProcess() {
   const responsePhotosJSON = await fetch("photos.json");
   const data = await responsePhotosJSON.json();
@@ -58,8 +52,8 @@ async function fetchProcess() {
 
     const img = document.createElement("img");
     img.classList.add("my-photo");
-    img.src = `https://picsum.photos/id/${id}/500`;
-    img.alt = `${title}`;
+    img.src = `https://picsum.photos/id/${ id }/500`;
+    img.alt = `${ title }`;
     photoGrid.appendChild(img);
 
     img.addEventListener("click", () => {
@@ -69,6 +63,8 @@ async function fetchProcess() {
   });
 }
 
+// this is IIFE and I find them extremely useful
+// in a development setting.
 (function () {
   createApp();
   fetchProcess();
